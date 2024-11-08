@@ -3,10 +3,15 @@ import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState } from "react";
-import { _directories } from "@/data";
-
-export const placeholder = "https://sunteccity.com.sg/imgs/logo-fallback.png";
+import { useEffect, useState } from "react";
+import { _directories as fallback, placeholderImage } from "@/data";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetFooter,
+} from "@/components/ui/sheet";
+import { fallbackUrl } from "@/lib/utils";
 
 function CategoryList({
   title,
@@ -14,7 +19,7 @@ function CategoryList({
   onClick,
 }: {
   title: string;
-  stores: (typeof _directories.Result)[0]["Merchants"];
+  stores: (typeof fallback.Result)[0]["Merchants"];
   onClick: () => void;
 }) {
   return (
@@ -25,17 +30,17 @@ function CategoryList({
           See more
         </button>
       </div>
-      <div className="flex overflow-x-scroll gap-2">
+      <div className="flex overflow-x-scroll no-scrollbar gap-2">
         {stores.map((store) => (
           <Link href={`/stores/${store.MerchantID}`} key={store.MerchantID}>
             <div className="min-w-[200px] flex" key={store.MerchantID}>
               <div className="w-full bg-white rounded-lg shadow-md p-2 mb-4">
                 <Image
                   src={
-                    store.PromotionalImage ||
-                    store.DetailImage ||
-                    store.MerchantLogo ||
-                    placeholder
+                    fallbackUrl(store.PromotionalImage) ||
+                    fallbackUrl(store.DetailImage) ||
+                    fallbackUrl(store.MerchantLogo) ||
+                    placeholderImage
                   }
                   alt="Placeholder"
                   className="w-full h-24 object-cover rounded"
@@ -59,51 +64,75 @@ function CategoryList({
 
 function StoreGrid({
   stores,
+  isHalal,
+  isEVoucher,
+  isPayWithPoints,
 }: {
-  stores: (typeof _directories.Result)[0]["Merchants"];
+  stores: (typeof fallback.Result)[0]["Merchants"];
+  isHalal?: boolean;
+  isEVoucher?: boolean;
+  isPayWithPoints?: boolean;
 }) {
   return (
     <div className="p-4 grid grid-cols-2 gap-4">
-      {stores.map((store) => (
-        <Link href={`/stores/${store.MerchantID}`} key={store.MerchantID}>
-          <div className="min-w-[160px] mt-2 flex" key={store.MerchantID}>
-            <div className="w-full bg-white rounded-lg shadow-md p-2">
-              <Image
-                src={
-                  store.PromotionalImage ||
-                  store.DetailImage ||
-                  store.MerchantLogo ||
-                  placeholder
-                }
-                alt="Placeholder"
-                className="w-full h-24 object-cover rounded"
-                width={160}
-                height={160}
-              />
-              <p className="mt-2 text-xs font-semibold">{store.StoreName}</p>
-              <p className="text-sm font-bold">{store.UnitNumber}</p>
+      {stores.map((store) => {
+        if (isHalal && store.isHalalCertified !== "1") return null;
+        if (isEVoucher && store.acceptVouchers !== "1") return null;
+        if (isPayWithPoints && store.canPayWithPoints !== "1") return null;
+
+        return (
+          <Link href={`/stores/${store.MerchantID}`} key={store.MerchantID}>
+            <div className="min-w-[160px] mt-2 flex" key={store.MerchantID}>
+              <div className="w-full bg-white rounded-lg shadow-md p-2">
+                <Image
+                  src={
+                    fallbackUrl(store.PromotionalImage) ||
+                    fallbackUrl(store.DetailImage) ||
+                    fallbackUrl(store.MerchantLogo) ||
+                    placeholderImage
+                  }
+                  alt="Placeholder"
+                  className="w-full h-24 object-cover rounded"
+                  width={160}
+                  height={160}
+                />
+                <p className="mt-2 text-xs font-semibold">{store.StoreName}</p>
+                <p className="text-sm font-bold">{store.UnitNumber}</p>
+              </div>
             </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        );
+      })}
     </div>
   );
 }
 
 function groupBy<T>(items: T[], key: keyof T): Record<string, T[]> {
-  return items.reduce((result, item) => {
-    const groupKey = item[key] as string;
-    return {
-      ...result,
-      [groupKey]: [...(result[groupKey] || []), item],
-    };
-  }, {} as Record<string, T[]>);
+  return items.reduce(
+    (result, item) => {
+      const groupKey = item[key] as string;
+      return {
+        ...result,
+        [groupKey]: [...(result[groupKey] || []), item],
+      };
+    },
+    {} as Record<string, T[]>,
+  );
 }
 
 const DirectoryPage: React.FC = () => {
   const router = useRouter();
   const [categoryId, setCategoryId] = useState<number>(0);
   const [subCategoryId, setSubCategoryId] = useState<number>(-1);
+  const [_directories, setDirectories] = useState(fallback);
+  const [filter, setFilter] = useState<number[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetch("/api/directories")
+      .then((res) => res.json())
+      .then((data) => setDirectories(data));
+  }, []);
 
   let stores = _directories.Result;
   let grouped = {} as {
@@ -116,8 +145,10 @@ const DirectoryPage: React.FC = () => {
     }[];
   };
 
+  const directories = { ..._directories };
+
   if (categoryId > -1) {
-    stores = _directories.Result.filter((store) => {
+    stores = directories.Result.filter((store) => {
       if (categoryId === 0) {
         return true;
       }
@@ -134,7 +165,7 @@ const DirectoryPage: React.FC = () => {
     };
   }
   if (subCategoryId > -1) {
-    stores = _directories.Result.filter((store) => {
+    stores = directories.Result.filter((store) => {
       return store.SubCategoryID === subCategoryId;
     });
     grouped = groupBy(stores, "SubCategoryName") as {
@@ -184,11 +215,86 @@ const DirectoryPage: React.FC = () => {
   const renderSubCategoryView = () => {
     return (
       <>
-        <div className="gap-4 p-4">
-          <button>Filter</button>
-        </div>
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger asChild>
+            <div className="p-4">
+              <button className="flex items-center space-x-1 text-gray-600 px-6 py-2 w-full border boder-gray-600 rounded-lg">
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M3 5h14v2H3V5zm2 5h10v2H5v-2zm3 5h4v2H8v-2z" />
+                </svg>
+                <span>Filter</span>
+              </button>
+            </div>
+          </SheetTrigger>
+          <SheetContent side="bottom" className="bg-white space-y-4">
+            <div className="space-y-2">
+              <h3>Filter By</h3>
+              <hr />
+              {[
+                {
+                  value: 0,
+                  label: "Pay with points",
+                },
+                {
+                  value: 1,
+                  label: "Halal Certified",
+                },
+                {
+                  value: 2,
+                  label: "e-vouchers accepted",
+                },
+              ].map((item) => (
+                <div key={item.value} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id={item.label}
+                    checked={filter.includes(item.value)}
+                    onChange={() => {
+                      if (filter.includes(item.value)) {
+                        setFilter([
+                          ...filter.filter((value) => value !== item.value),
+                        ]);
+                      } else {
+                        setFilter([...filter, item.value]);
+                      }
+                    }}
+                  />
+                  <label htmlFor={item.label}>{item.label}</label>
+                </div>
+              ))}
+            </div>
+            <SheetFooter className="grid grid-cols-2 gap-2">
+              <button
+                className="rounded-lg text-bold py-2 text-orange-500 border border-orange-500"
+                onClick={() => {
+                  setFilter([]);
+                }}
+              >
+                Reset
+              </button>
+              <button
+                className="rounded-lg py-2 text-bold text-white bg-orange-500"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                Apply
+              </button>
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
         {Object.entries(grouped).map((group) => (
-          <StoreGrid key={group[0]} stores={group[1][0].Merchants} />
+          <StoreGrid
+            key={group[0]}
+            stores={group[1][0].Merchants}
+            isHalal={filter.includes(1)}
+            isEVoucher={filter.includes(2)}
+            isPayWithPoints={filter.includes(0)}
+          />
         ))}
       </>
     );
@@ -196,7 +302,7 @@ const DirectoryPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800">
-      <header className="flex items-center p-4 border-b shadow-sm">
+      <header className="fixed top-0 left-0 right-0 flex justify-around p-4 bg-white border-t max-w-96 m-auto">
         <button
           className="text-gray-600"
           onClick={() => {
@@ -222,8 +328,10 @@ const DirectoryPage: React.FC = () => {
           </h1>
         )}
       </header>
-      {shouldRenderCategoryView && renderCategoryView()}
-      {shouldRenderSubCategoryView && renderSubCategoryView()}
+      <main className="pt-16">
+        {shouldRenderCategoryView && renderCategoryView()}
+        {shouldRenderSubCategoryView && renderSubCategoryView()}
+      </main>
     </div>
   );
 };

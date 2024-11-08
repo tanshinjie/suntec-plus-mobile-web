@@ -1,11 +1,11 @@
-import { _promotions } from "@/data";
+import { _promotions as fallback } from "@/data";
 import {
   ArrowLeftIcon,
   CalendarIcon,
   MapPinIcon,
 } from "@heroicons/react/16/solid";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,15 +51,18 @@ export const PromotionCard: React.FC<PromotionCardProps> = ({
   );
 };
 
-const PromotionList: React.FC = () => {
+const PromotionList = ({ data }: { data: typeof fallback }) => {
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
-      {_promotions.Result.map((promotion) => (
-        <Link href={`/promotions/${promotion.HappeningID}`} key={promotion.HappeningID}>
+      {data.Result.map((promotion) => (
+        <Link
+          href={`/promotions/${promotion.HappeningID}`}
+          key={promotion.HappeningID}
+        >
           <PromotionCard
             title={promotion.Title}
             dateRange={`${dayjs(promotion.StartDate).format(
-              "DD MMM YY"
+              "DD MMM YY",
             )} - ${dayjs(promotion.EndDate).format("DD MMM YY")}`}
             location={promotion.Location ?? ""}
             imageUrl={promotion.ImagePath}
@@ -72,11 +75,17 @@ const PromotionList: React.FC = () => {
 
 const PromotionsPage: React.FC = () => {
   const router = useRouter();
-  // const [] = useState<number>(0);
+  const [_promotions, setPromotions] = useState(fallback);
+
+  useEffect(() => {
+    fetch("/api/promotions")
+      .then((res) => res.json())
+      .then((data) => setPromotions(data));
+  }, []);
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800">
-      <header className="flex items-center p-4 border-b shadow-sm">
+      <header className="fixed top-0 left-0 right-0 flex justify-around p-4 bg-white border-t max-w-96 m-auto">
         <button className="text-gray-600" onClick={() => router.back()}>
           <ArrowLeftIcon className="size-4" />
         </button>
@@ -84,15 +93,17 @@ const PromotionsPage: React.FC = () => {
           Promotions
         </h1>
       </header>
-      <div className="flex my-4 p-4">
-        <button className="font-semibold rounded-full text-white bg-black w-full py-2">
-          <span>On Going</span>
-        </button>
-        <button className="font-semibold rounded-full w-full py-2">
-          <span>Upcoming</span>
-        </button>
-      </div>
-      <PromotionList />
+      <main className="pt-16">
+        <div className="flex my-4 p-4">
+          <button className="font-semibold rounded-full text-white bg-black w-full py-2">
+            <span>On Going</span>
+          </button>
+          <button className="font-semibold rounded-full w-full py-2">
+            <span>Upcoming</span>
+          </button>
+        </div>
+        <PromotionList data={_promotions} />
+      </main>
     </div>
   );
 };

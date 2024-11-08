@@ -6,7 +6,7 @@ const ScanPage = () => {
   const router = useRouter();
   return (
     <div>
-      <header className="flex items-center p-4 border-b shadow-sm">
+      <header className="fixed top-0 left-0 right-0 flex justify-around p-4 bg-white border-t max-w-96 m-auto">
         <button className="text-gray-600" onClick={() => router.back()}>
           <ArrowLeftIcon className="size-4" />
         </button>
@@ -14,26 +14,28 @@ const ScanPage = () => {
           Upload Receipt
         </h1>
       </header>
-      <Image
-        alt="Scan receipt"
-        src="/scan-receipt.png"
-        width={400}
-        height={400}
-      />
-      <div className="px-4 mt-4 w-full">
-        <label
-          htmlFor="upload"
-          className="w-full block text-center bg-green-500 text-bold text-white rounded-lg px-6 py-4 "
-        >
-          Continue
-        </label>
-        <input
-          className="hidden"
-          id="upload"
-          type="file"
-          accept="image/*;capture=camera"
+      <main className="pt-16">
+        <Image
+          alt="Scan receipt"
+          src="/scan-receipt.png"
+          width={400}
+          height={400}
         />
-      </div>
+        <div className="px-4 mt-4 w-full">
+          <label
+            htmlFor="upload"
+            className="w-full block text-center bg-green-500 text-bold text-white rounded-lg px-6 py-4 "
+          >
+            Continue
+          </label>
+          <input
+            className="hidden"
+            id="upload"
+            type="file"
+            accept="image/*;capture=camera"
+          />
+        </div>
+      </main>
     </div>
   );
 };

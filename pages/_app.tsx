@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/16/solid";
 import type { AppProps } from "next/app";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -19,13 +20,22 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 function Footer() {
+  const router = useRouter();
   return (
     <div className="fixed bottom-0 left-0 right-0 flex justify-around p-4 bg-white border-t max-w-96 m-auto">
       <Link href="/">
-        <HomeIcon className="w-6 h-6 text-gray-600" />
+        <HomeIcon
+          className={`w-6 h-6 text-gray-600 ${
+            router.asPath === "/" ? "text-orange-400" : ""
+          }`}
+        />
       </Link>
       <Link href="/scan">
-        <WalletIcon className="w-6 h-6 text-gray-600" />
+        <WalletIcon
+          className={`w-6 h-6 text-gray-600 ${
+            router.asPath === "/scan" ? "text-orange-400" : ""
+          }`}
+        />
       </Link>
       <div />
       <Link
@@ -35,10 +45,18 @@ function Footer() {
         <CameraIcon className="w-6 h-6 text-gray-600" />
       </Link>
       <Link href="/directory">
-        <BuildingStorefrontIcon className="w-6 h-6 text-gray-600" />
+        <BuildingStorefrontIcon
+          className={`w-6 h-6 text-gray-600 ${
+            router.asPath === "/directory" ? "text-orange-400" : ""
+          }`}
+        />
       </Link>
       <Link href="/e-wallet/carpark">
-        <TruckIcon className="w-6 h-6 text-gray-600" />
+        <TruckIcon
+          className={`w-6 h-6 text-gray-600 ${
+            router.asPath === "/e-wallet/carpark" ? "text-orange-400" : ""
+          }`}
+        />
       </Link>
     </div>
   );

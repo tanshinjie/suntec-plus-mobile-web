@@ -1,12 +1,15 @@
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
-import { Scanner } from "@yudiel/react-qr-scanner";
+import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const PayPage = () => {
   const router = useRouter();
+  const [value, setValue] = useState<IDetectedBarcode[]>();
+
   return (
-    <div>
-      <header className="flex items-center p-4 border-b shadow-sm">
+    <>
+      <header className="fixed top-0 left-0 right-0 flex justify-around p-4 bg-white border-t max-w-96 m-auto">
         <button className="text-gray-600" onClick={() => router.back()}>
           <ArrowLeftIcon className="size-4" />
         </button>
@@ -14,8 +17,21 @@ const PayPage = () => {
           Scan Merchant
         </h1>
       </header>
-      <Scanner onScan={(result) => console.log(result)} />;
-    </div>
+      <main className="pt-16">
+        <Scanner
+          onScan={(result: IDetectedBarcode[]) => {
+            console.log(result);
+            setValue(result);
+          }}
+        />
+        <div>QR value:</div>
+        <div>
+          <pre className="w-full text-wrap break-words">
+            {JSON.stringify(value, null, 2)}
+          </pre>
+        </div>
+      </main>
+    </>
   );
 };
 

@@ -14,7 +14,7 @@ export default function Vouchers() {
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800">
       {/* Header */}
-      <header className="flex items-center p-4 border-b shadow-sm">
+      <header className="fixed top-0 left-0 right-0 flex justify-around p-4 bg-white border-t max-w-96 m-auto">
         <button className="text-gray-600" onClick={() => router.back()}>
           <ArrowLeftIcon className="size-4" />
         </button>
@@ -23,39 +23,41 @@ export default function Vouchers() {
         </h1>
       </header>
 
-      {/* Navigation Tabs */}
-      <div className="flex justify-around p-4 bg-gray-100">
-        <Link href="/e-wallet/vouchers">
-          <div className="flex flex-col items-center">
-            <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
-              <ReceiptPercentIcon className="size-6" />
+      <main className="pt-16">
+        {/* Navigation Tabs */}
+        <div className="flex justify-around p-4 bg-gray-100">
+          <Link href="/e-wallet/vouchers">
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
+                <ReceiptPercentIcon className="size-6" />
+              </div>
+              <span className="mt-2 text-sm">e-Vouchers</span>
             </div>
-            <span className="mt-2 text-sm">e-Vouchers</span>
-          </div>
-        </Link>
-        <Link href="/e-wallet/carpark">
-          <div className="flex flex-col items-center">
-            <div className="w-12 h-12  bg-gray-200 rounded-lg flex items-center justify-center">
-              <TruckIcon className="size-6" />
+          </Link>
+          <Link href="/e-wallet/carpark">
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12  bg-gray-200 rounded-lg flex items-center justify-center">
+                <TruckIcon className="size-6" />
+              </div>
+              <span className="mt-2 text-sm">Carpark Dollars</span>
             </div>
-            <span className="mt-2 text-sm">Carpark Dollars</span>
-          </div>
-        </Link>
-        <Link href="/e-wallet/promo-code">
-          <div className="flex flex-col items-center">
-            <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
-              <TicketIcon className="size-6" />
+          </Link>
+          <Link href="/e-wallet/promo-code">
+            <div className="flex flex-col items-center">
+              <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
+                <TicketIcon className="size-6" />
+              </div>
+              <span className="mt-2 text-sm">Promo Code</span>
             </div>
-            <span className="mt-2 text-sm">Promo Code</span>
-          </div>
-        </Link>
-      </div>
+          </Link>
+        </div>
 
-      <main className="p-6 space-y-4 text-center mt-40">
-        <h2>You don&apos;t have any vouchers</h2>
-        <button className="text-yellow-500 font-semibold px-6 py-2 rounded-lg">
-          Buy Vouchers
-        </button>
+        <main className="p-6 space-y-4 text-center mt-40">
+          <h2>You don&apos;t have any vouchers</h2>
+          <button className="text-orange-500 font-semibold px-6 py-2 rounded-lg">
+            Buy Vouchers
+          </button>
+        </main>
       </main>
     </div>
   );

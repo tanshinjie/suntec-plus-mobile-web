@@ -112,8 +112,8 @@ const DirectoryCategory = {
   SERVICES: {
     id: 3,
     name: "Services",
-  }
-}
+  },
+};
 
 const Category = {
   // Dining
