@@ -84,7 +84,7 @@ export default function RewardDetailPage() {
             </Accordion.Root>
           </div>
 
-          <button className="rounded-md font-bold text-xl bg-orange-400 text-white w-full py-4">
+          <button className="rounded-md font-bold text-xl bg-orange-500 text-white w-full py-4">
             Redeem
           </button>
         </div>

@@ -45,7 +45,7 @@ export default function PromoCode() {
           </Link>
           <Link href="/e-wallet/promo-code">
             <div className="flex flex-col items-center">
-              <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
                 <TicketIcon className="size-6" />
               </div>
               <span className="mt-2 text-sm">Promo Code</span>
@@ -60,7 +60,7 @@ export default function PromoCode() {
               className="px-6 py-2 w-2/3  rounded-md border-[1px] border-slate-500"
               placeholder="Enter promo code"
             />
-            <button className="bg-yellow-500 text-white font-semibold px-6 py-2 rounded-lg">
+            <button className="bg-orange-500 text-white font-semibold px-6 py-2 rounded-lg">
               Go
             </button>
             <button className="text-black font-semibold py-2 rounded-lg">
@@ -74,7 +74,7 @@ export default function PromoCode() {
               className="px-6 py-2 w-2/3 rounded-md border-[1px] border-slate-500"
               placeholder="Enter yuu promo code"
             />
-            <button className="bg-yellow-500 text-white font-semibold px-6 py-2 rounded-lg">
+            <button className="bg-orange-500 text-white font-semibold px-6 py-2 rounded-lg">
               Go
             </button>
           </div>

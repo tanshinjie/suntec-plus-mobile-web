@@ -28,7 +28,7 @@ export default function Vouchers() {
         <div className="flex justify-around p-4 bg-gray-100">
           <Link href="/e-wallet/vouchers">
             <div className="flex flex-col items-center">
-              <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
                 <ReceiptPercentIcon className="size-6" />
               </div>
               <span className="mt-2 text-sm">e-Vouchers</span>

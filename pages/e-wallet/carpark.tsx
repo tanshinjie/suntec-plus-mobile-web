@@ -36,7 +36,7 @@ export default function CarPark() {
           </Link>
           <Link href="/e-wallet/carpark">
             <div className="flex flex-col items-center">
-              <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center">
+              <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
                 <TruckIcon className="size-6" />
               </div>
               <span className="mt-2 text-sm">Carpark Dollars</span>
@@ -71,7 +71,7 @@ export default function CarPark() {
           {/* No Vehicle Section */}
           <div className="mt-6 text-center">
             <p className="text-gray-600">You currently have no IU number</p>
-            <button className="mt-4 bg-yellow-500 text-white font-semibold px-6 py-2 rounded-lg">
+            <button className="mt-4 bg-orange-500 text-white font-semibold px-6 py-2 rounded-lg">
               Add vehicle details
             </button>
           </div>

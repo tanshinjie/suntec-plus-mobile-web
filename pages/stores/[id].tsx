@@ -63,7 +63,7 @@ export default function StorePage() {
               </span>
             )}
             {store.isParticipating === "1" && (
-              <span className="rounded-full px-4 py-2 bg-yellow-500">
+              <span className="rounded-full px-4 py-2 bg-orange-500">
                 Earn points
               </span>
             )}

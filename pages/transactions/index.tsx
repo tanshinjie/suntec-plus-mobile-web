@@ -32,31 +32,31 @@ export default function Transactions() {
               defaultValue={"receipts"}
             >
               <Tabs.Trigger
-                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-400 data-[state=active]:text-white"
+                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-500 data-[state=active]:text-white"
                 value="receipts"
               >
                 Receipts
               </Tabs.Trigger>
               <Tabs.Trigger
-                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none data-[state=active]:relative data-[state=active]:bg-orange-400 data-[state=active]:text-white"
+                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none data-[state=active]:relative data-[state=active]:bg-orange-500 data-[state=active]:text-white"
                 value="redemption"
               >
                 Redemption
               </Tabs.Trigger>
               <Tabs.Trigger
-                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-400 data-[state=active]:text-white"
+                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-500 data-[state=active]:text-white"
                 value="utilisation"
               >
                 Utilisation
               </Tabs.Trigger>
               <Tabs.Trigger
-                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-400 data-[state=active]:text-white"
+                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-500 data-[state=active]:text-white"
                 value="purchased"
               >
                 Purchased
               </Tabs.Trigger>
               <Tabs.Trigger
-                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-400 data-[state=active]:text-white"
+                className="m-2 rounded-md flex h-[45px] flex-1 cursor-default select-none items-center justify-center bg-white px-5 text-[15px] leading-none outline-none  data-[state=active]:relative data-[state=active]:bg-orange-500 data-[state=active]:text-white"
                 value="expired"
               >
                 Expired
