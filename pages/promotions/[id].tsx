@@ -1,4 +1,4 @@
-import { _directories, _promotions } from "@/data";
+import { _promotions } from "@/data";
 import Image from "next/image";
 import { placeholder } from "../directory";
 import { useParams } from "next/navigation";
@@ -14,12 +14,10 @@ import dayjs from "dayjs";
 import { PromotionCard } from ".";
 import Link from "next/link";
 import * as Accordion from "@radix-ui/react-accordion";
-import { useRef, useState } from "react";
 
 export default function PromotionPage() {
   const params = useParams();
   const router = useRouter();
-  const ref = useRef();
 
   let promotion;
 
@@ -96,9 +94,8 @@ export default function PromotionPage() {
             <h3 className="text-lg font-bold">More like this</h3>
             <div className="flex gap-4">
               {promotion.morePromotions.map((promotion) => (
-                <Link href={`/promotion/${promotion.HappeningID}`}>
+                <Link href={`/promotion/${promotion.HappeningID}`} key={promotion.HappeningID}>
                   <PromotionCard
-                    key={promotion.HappeningID}
                     title={promotion.Title}
                     dateRange={`${dayjs(promotion.StartDate).format(
                       "DD MMM YY"

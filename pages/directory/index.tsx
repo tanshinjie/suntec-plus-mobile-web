@@ -45,7 +45,9 @@ function CategoryList({
                 <p className="mt-2 text-xs font-semibold text-ellipsis line-clamp-1">
                   {store.StoreName}
                 </p>
-                <p className="text-sm font-bold line-clamp-1">{store.UnitNumber}</p>
+                <p className="text-sm font-bold line-clamp-1">
+                  {store.UnitNumber}
+                </p>
               </div>
             </div>
           </Link>
@@ -57,10 +59,8 @@ function CategoryList({
 
 function StoreGrid({
   stores,
-  onClick,
 }: {
   stores: (typeof _directories.Result)[0]["Merchants"];
-  onClick: () => void;
 }) {
   return (
     <div className="p-4 grid grid-cols-2 gap-4">
@@ -90,14 +90,16 @@ function StoreGrid({
   );
 }
 
-const groupBy = (items, key) =>
-  items.reduce(
-    (result, item) => ({
+function groupBy<T>(items: T[], key: keyof T): Record<string, T[]> {
+  return items.reduce((result, item) => {
+    const groupKey = item[key] as string;
+    return {
       ...result,
-      [item[key]]: [...(result[item[key]] || []), item],
-    }),
-    {}
-  );
+      [groupKey]: [...(result[groupKey] || []), item],
+    };
+  }, {} as Record<string, T[]>);
+}
+
 const DirectoryPage: React.FC = () => {
   const router = useRouter();
   const [categoryId, setCategoryId] = useState<number>(0);
@@ -186,13 +188,7 @@ const DirectoryPage: React.FC = () => {
           <button>Filter</button>
         </div>
         {Object.entries(grouped).map((group) => (
-          <StoreGrid
-            key={group[0]}
-            stores={group[1][0].Merchants}
-            onClick={() => {
-              console.log("clicked");
-            }}
-          />
+          <StoreGrid key={group[0]} stores={group[1][0].Merchants} />
         ))}
       </>
     );

@@ -1,4 +1,4 @@
-import { _events, events } from "@/data";
+import { _events } from "@/data";
 import {
   ArrowLeftIcon,
   CalendarIcon,
@@ -64,10 +64,9 @@ const CategoryFilter: React.FC = () => {
 const EventList: React.FC = () => {
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
-      {_events.Result.map((event, index) => (
-        <Link href={`/events/${event.EventID}`}>
+      {_events.Result.map((event) => (
+        <Link href={`/events/${event.EventID}`} key={event.EventID}>
           <EventCard
-            key={index}
             title={event.Title}
             dateRange={`${dayjs(event.StartDate).format("DD MMM YY")} - ${dayjs(
               event.EndDate

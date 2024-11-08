@@ -1,18 +1,12 @@
-import { _directories, _rewards } from "@/data";
+import { _rewards } from "@/data";
 import Image from "next/image";
 import { placeholder } from "../directory";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import {
-  ArrowDownIcon,
-  ArrowLeftIcon,
-  BuildingStorefrontIcon,
-  CalendarIcon,
-  ChevronDownIcon,
-  MapPinIcon,
+  ArrowLeftIcon, ChevronDownIcon
 } from "@heroicons/react/16/solid";
 import dayjs from "dayjs";
-import Link from "next/link";
 import * as Accordion from "@radix-ui/react-accordion";
 
 export default function RewardDetailPage() {

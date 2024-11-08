@@ -8,7 +8,6 @@ import {
 import React from "react";
 import { useRouter } from "next/router"; // Usage: Page router
 import Link from "next/link";
-import { QrCodeIcon } from "@heroicons/react/16/solid";
 
 export default function Vouchers() {
   const router = useRouter();
@@ -53,7 +52,7 @@ export default function Vouchers() {
       </div>
 
       <main className="p-6 space-y-4 text-center mt-40">
-        <h2>You don't have any vouchers</h2>
+        <h2>You don&apos;t have any vouchers</h2>
         <button className="text-yellow-500 font-semibold px-6 py-2 rounded-lg">
           Buy Vouchers
         </button>

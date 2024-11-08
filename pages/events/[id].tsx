@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import * as Accordion from "@radix-ui/react-accordion";
 import Link from "next/link";
 
-export default function eventPage() {
+export default function EventPage() {
   const params = useParams();
   const router = useRouter();
 

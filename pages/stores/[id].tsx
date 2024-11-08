@@ -1,4 +1,4 @@
-import { _directories, mallMap } from "@/data";
+import { _directories } from "@/data";
 import Image from "next/image";
 import { placeholder } from "../directory";
 import { useParams } from "next/navigation";

@@ -55,9 +55,8 @@ const PromotionList: React.FC = () => {
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
       {_promotions.Result.map((promotion) => (
-        <Link href={`/promotions/${promotion.HappeningID}`}>
+        <Link href={`/promotions/${promotion.HappeningID}`} key={promotion.HappeningID}>
           <PromotionCard
-            key={promotion.HappeningID}
             title={promotion.Title}
             dateRange={`${dayjs(promotion.StartDate).format(
               "DD MMM YY"

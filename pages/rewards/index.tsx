@@ -1,4 +1,4 @@
-import { _rewards, rewards } from "@/data";
+import { _rewards } from "@/data";
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import { useRouter } from "next/router";
 import React from "react";
@@ -45,10 +45,9 @@ const CategoryFilter: React.FC = () => {
 const RewardList: React.FC = () => {
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
-      {_rewards.Result.rewards.map((reward, index) => (
-        <Link href={`/rewards/${reward.id}`}>
+      {_rewards.Result.rewards.map((reward) => (
+        <Link href={`/rewards/${reward.id}`} key={reward.id}>
           <RewardCard
-            key={index}
             title={reward.name}
             imageUrl={reward.imageUrl}
             value={reward.intouchPoints}
