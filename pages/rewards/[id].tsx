@@ -1,7 +1,7 @@
+"use client";
 import { _rewards } from "@/data";
 import Image from "next/image";
 import { placeholder } from "../directory";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import {
   ArrowLeftIcon, ChevronDownIcon
@@ -10,13 +10,16 @@ import dayjs from "dayjs";
 import * as Accordion from "@radix-ui/react-accordion";
 
 export default function RewardDetailPage() {
-  const params = useParams();
   const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   let reward;
 
   for (let i = 0; i < _rewards.Result.rewards.length; i++) {
-    if (String(_rewards.Result.rewards[i].id) === params.id) {
+    if (String(_rewards.Result.rewards[i].id) === router.query.id) {
       reward = _rewards.Result.rewards[i];
       break;
     }

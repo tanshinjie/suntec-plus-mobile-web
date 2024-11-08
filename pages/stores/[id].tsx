@@ -1,20 +1,23 @@
+"use client";
 import { _directories } from "@/data";
 import Image from "next/image";
 import { placeholder } from "../directory";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { ArrowLeftIcon } from "@heroicons/react/16/solid";
 import Link from "next/link";
 
 export default function StorePage() {
-  const params = useParams();
   const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   let store;
 
   for (let i = 0; i < _directories.Result.length; i++) {
     for (let j = 0; j < _directories.Result[i].Merchants.length; j++) {
-      if (_directories.Result[i].Merchants[j].MerchantID === params.id) {
+      if (_directories.Result[i].Merchants[j].MerchantID === router.query.id) {
         store = _directories.Result[i].Merchants[j];
         break;
       }

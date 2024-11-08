@@ -1,7 +1,7 @@
+"use client";
 import { _promotions } from "@/data";
 import Image from "next/image";
 import { placeholder } from "../directory";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import {
   ArrowLeftIcon,
@@ -16,13 +16,16 @@ import Link from "next/link";
 import * as Accordion from "@radix-ui/react-accordion";
 
 export default function PromotionPage() {
-  const params = useParams();
   const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   let promotion;
 
   for (let i = 0; i < _promotions.Result.length; i++) {
-    if (String(_promotions.Result[i].HappeningID) === params.id) {
+    if (String(_promotions.Result[i].HappeningID) === router.query.id) {
       promotion = _promotions.Result[i];
       break;
     }

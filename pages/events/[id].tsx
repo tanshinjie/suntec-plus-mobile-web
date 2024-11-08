@@ -1,7 +1,7 @@
+"use client";
 import { _events } from "@/data";
 import Image from "next/image";
 import { placeholder } from "../directory";
-import { useParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { ArrowLeftIcon, ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/16/solid";
 import { MapPinIcon } from "@heroicons/react/24/outline";
@@ -10,13 +10,16 @@ import * as Accordion from "@radix-ui/react-accordion";
 import Link from "next/link";
 
 export default function EventPage() {
-  const params = useParams();
   const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   let event;
 
   for (let i = 0; i < _events.Result.length; i++) {
-    if (String(_events.Result[i].EventID) === params.id) {
+    if (String(_events.Result[i].EventID) === router.query.id) {
       event = _events.Result[i];
       break;
     }
